@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Editor />
+    <Editor v-model="data" :image-provider="imageProvider" />
+    <pre>{{ data }}</pre>
   </div>
 </template>
 
@@ -8,6 +9,17 @@
 import Editor from '@/index.js'
 
 export default {
+  data() {
+    return {
+      data: 'hello',
+      imageProvider: {
+        name: 'qiniu',
+        token:
+          '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:8lM-4tOO3g9IipeFyLloLN6xvvE=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTU2MzgwMzUyOX0=',
+        domain: 'cdn-testing.zanquan.net',
+      },
+    }
+  },
   name: 'app',
   components: {
     Editor,
@@ -24,6 +36,7 @@ export default {
   margin-top: 60px;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
 }
 </style>

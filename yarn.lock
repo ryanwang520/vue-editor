@@ -670,14 +670,6 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@baoshishu/vue-editor@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@baoshishu/vue-editor/-/vue-editor-0.1.3.tgz#2e3f35377b6fe3494d906b4ee59f010c72057930"
-  integrity sha512-m7/tOGNBudOVgOlxA9vpmy5tkN+FGwolb3G5rsUEO84rOGv3j/+B1F3Ne5djHKixmhPAvvP3MKH3mUB9v1JFDA==
-  dependencies:
-    core-js "^2.6.5"
-    vue "^2.6.10"
-
 "@hapi/address@2.x.x":
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-2.0.0.tgz#9f05469c88cb2fd3dcd624776b54ee95c312126a"

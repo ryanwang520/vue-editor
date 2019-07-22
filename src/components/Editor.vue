@@ -1,5 +1,5 @@
 <template>
-  <div ref="editor" :style="{ width }" class="editor">
+  <div v-if="editor" ref="editor" :style="{ width }" class="editor">
     <editor-menu-bar
       v-slot="{ commands, isActive, getMarkAttrs }"
       :editor="editor"
@@ -396,8 +396,8 @@ import {
   Strike,
   Underline,
   History,
-  Image,
 } from 'tiptap-extensions'
+import Image from './Image'
 import Heading from './Heading'
 import Paragraph from './Paragraph'
 import Blockquote from './Blockquote'
@@ -426,14 +426,33 @@ export default {
       default: '700px',
       type: String,
     },
+    imageProvider: {
+      required: true,
+      type: Object,
+    },
   },
   data() {
-    const fontsizes = [12, 14, 16, 18, 20, 24]
-    const headingLevels = [1, 2, 3]
     return {
       userColor: '',
       colorFill: false,
-      colors: [
+      fontSizePickerVisible: false,
+      colorPickerVisible: false,
+      currentFontSize: 16,
+      linkMenuIsActive: false,
+      linkUrl: null,
+      editor: null,
+    }
+  },
+  computed: {
+    headingLevels() {
+      return [1, 2, 3]
+    },
+    fontsizes() {
+      const fontsizes = [12, 14, 16, 18, 20, 24]
+      return fontsizes
+    },
+    colors() {
+      const colors = [
         'black',
         '#333',
         '#666',
@@ -446,48 +465,16 @@ export default {
         '#48bb78',
         '#38b2ac',
         '#f6ad55',
-      ],
-      headingLevels,
-      fontSizePickerVisible: false,
-      colorPickerVisible: false,
-      currentFontSize: 16,
-      fontsizes,
-      linkMenuIsActive: false,
-      linkUrl: null,
-      editor: new Editor({
-        extensions: [
-          new Paragraph(),
-          new FontSize({ sizes: fontsizes }),
-          // new TextAlign(),
-          new Image(),
-          new Blockquote(),
-          new CodeBlock(),
-          new Color(),
-          new ColorFill(),
-          new HorizontalRule(),
-          new HardBreak(),
-          new Heading({ levels: headingLevels }),
-          new BulletList(),
-          new OrderedList(),
-          new ListItem(),
-          new TodoItem(),
-          new TodoList(),
-          new Bold(),
-          new Code(),
-          new Italic(),
-          new Link(),
-          new Strike(),
-          new Underline(),
-          new History(),
-        ],
-        content: this.value,
-        onUpdate: ({ getHTML }) => {
-          this.$emit('input', getHTML().replace(/<p><\/p>/g, '<p><br></p>'))
-        },
-      }),
-    }
-  },
-  computed: {
+      ]
+      return colors
+    },
+
+    imageUploader() {
+      const imageUploader = new Image({
+        provider: this.imageProvider,
+      })
+      return imageUploader
+    },
     state() {
       return this.editor.state
     },
@@ -506,6 +493,36 @@ export default {
   },
 
   mounted() {
+    this.editor = new Editor({
+      extensions: [
+        new Paragraph(),
+        new FontSize({ sizes: this.fontsizes }),
+        this.imageUploader,
+        new Blockquote(),
+        new CodeBlock(),
+        new Color(),
+        new ColorFill(),
+        new HorizontalRule(),
+        new HardBreak(),
+        new Heading({ levels: this.headingLevels }),
+        new BulletList(),
+        new OrderedList(),
+        new ListItem(),
+        new TodoItem(),
+        new TodoList(),
+        new Bold(),
+        new Code(),
+        new Italic(),
+        new Link(),
+        new Strike(),
+        new Underline(),
+        new History(),
+      ],
+      content: this.value,
+      onUpdate: ({ getHTML }) => {
+        this.$emit('input', getHTML().replace(/<p><\/p>/g, '<p><br></p>'))
+      },
+    })
     window.editor = this.editor
 
     this.closePicker = event => {
@@ -586,10 +603,22 @@ export default {
       command({ size })
       this.fontSizePickerVisible = false
     },
+
     selectColor(commands, color) {
       const command = this.colorFill ? commands.fill : commands.color
       command({ color })
       this.colorPickerVisible = false
+    },
+    fileSelect(event, command) {
+      const file = event.target.files[0]
+      this.imageUploader
+        .upload(file)
+        .then(src => {
+          command({ src })
+        })
+        .finally(() => {
+          this.$refs.uploadInput.value = ''
+        })
     },
     showLinkMenu(attrs) {
       this.linkUrl = attrs.href

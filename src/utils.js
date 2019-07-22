@@ -18,23 +18,3 @@ export function nodeIsActive(state, type, attrs = {}) {
 
   return node.node.type == type && nodeHasAttrs(node.node, attrs)
 }
-
-export function upload(file, obj) {
-  return new Promise((resolve, reject) => {
-    const data = new FormData()
-    data.append('file', file)
-    data.append('token', obj.token)
-
-    const xhr = new XMLHttpRequest()
-    xhr.open('POST', 'https://upload.qiniup.com')
-    xhr.send(data)
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        const { key } = JSON.parse(xhr.responseText)
-        resolve(`https://${obj.domain}/${key}`)
-      } else {
-        reject()
-      }
-    }
-  })
-}
