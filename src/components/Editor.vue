@@ -1,5 +1,5 @@
 <template>
-  <div v-if="editor" ref="editor" :style="{ width }" class="editor">
+  <div v-if="editor" ref="editor" :style="{ width }" class="vue-editor">
     <editor-menu-bar
       v-slot="{ commands, isActive, getMarkAttrs }"
       :editor="editor"
@@ -702,10 +702,12 @@ $color-grey: #dddddd;
   min-height: 300px;
 }
 
-.editor {
+.vue-editor {
   position: relative;
+  line-height: 1.5;
+  font-size: 16px;
 
-  &__content {
+  .editor__content {
     overflow-y: scroll;
     word-wrap: break-word;
 
@@ -725,8 +727,10 @@ $color-grey: #dddddd;
         display: block;
       }
     }
-    * {
-      line-height: 16px;
+    p {
+      margin: 0;
+      margin-block-start: 0;
+      margin-block-end: 0;
     }
 
     p code {
