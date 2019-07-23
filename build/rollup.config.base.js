@@ -8,8 +8,13 @@ import postcss from 'rollup-plugin-postcss'
 const config = require('../package.json')
 
 export default {
-  // external: ['prosemirror-utils', 'v-tooltipo', 'tiptap',],
-  external: ['vue'],
+  external: [
+    'v-tooltip',
+    'tiptap',
+    'prosemirror-utils',
+    'tiptap-extensions',
+    'tiptap-commands',
+  ],
   input: 'src/index.js',
   plugins: [
     resolve({

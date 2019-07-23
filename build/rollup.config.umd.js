@@ -3,7 +3,11 @@ import base from './rollup.config.base'
 const config = Object.assign({}, base, {
   output: {
     globals: {
-      vue: 'Vue',
+      'v-tooltip': 'vTooltip',
+      'prosemirror-utils': 'prosemirrorUtils',
+      'tiptap-extensions': 'tiptapExtensions',
+      'tiptap-commands': 'tiptapCommands',
+      tiptap: 'tiptap',
     },
     exports: 'named',
     name: 'vue-editor',
