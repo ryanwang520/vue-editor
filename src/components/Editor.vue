@@ -376,6 +376,7 @@
 
 <script>
 import { nodeIsActive } from '../utils'
+import { VTooltip } from 'v-tooltip'
 
 import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import FontSize from './FontSize'
@@ -403,7 +404,6 @@ import Paragraph from './Paragraph'
 import Blockquote from './Blockquote'
 import ListItem from './ListItem'
 import { isActive as isTextAlignActive, setTextAlign } from '../TextAlign'
-// import { upload } from "../utils";
 
 export default {
   name: 'RICHEDITOR',
@@ -490,6 +490,9 @@ export default {
         this.editor.setContent(newVal)
       }
     },
+  },
+  directives: {
+    tooltip: VTooltip,
   },
 
   mounted() {

@@ -1,10 +1,11 @@
 {
   "name": "@baoshishu/vue-editor",
-  "version": "0.1.6",
-  "main": "dist/@baoshishu/vue-editor.umd.js",
+  "version": "0.1.7",
+  "main": "dist/vue-editor.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name @baoshishu/vue-editor ./src/index.js",
+    "build:umd": "rollup --config build/rollup.config.umd.js",
+    "build": "yarn build:umd",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -12,10 +13,17 @@
     "tiptap": "^1.23.3",
     "tiptap-commands": "^1.10.10",
     "tiptap-extensions": "^1.24.3",
-    "v-tooltip": "^2.0.2",
-    "vue": "^2.6.10"
+    "v-tooltip": "^2.0.2"
   },
   "devDependencies": {
+    "vue": "^2.6.10",
+    "rollup": "^1.17.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-vue": "^5.0.0",
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-plugin-eslint": "^3.9.0",
     "@vue/cli-service": "^3.9.0",
