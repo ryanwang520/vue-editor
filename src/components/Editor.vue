@@ -1,5 +1,10 @@
 <template>
-  <div v-if="editor" ref="editor" :style="{ width }" class="vue-editor">
+  <div
+    v-if="editor"
+    ref="editor"
+    :style="{ width }"
+    class="vue-editor"
+  >
     <editor-menu-bar
       v-slot="{ commands, isActive, getMarkAttrs }"
       :editor="editor"
@@ -12,7 +17,12 @@
           :class="{ 'is-active': isActive.bold() }"
           @click="commands.bold"
         >
-          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+          <svg
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
             <path
               d="M9 17.025V13h4.418c1.19 0 2.415.562 2.415 2.012s-1.608 2.013-2.9 2.013H9zM9 7h4.336c1 0 1.814.888 1.814 2 0 .89-.814 2-1.814 2H9V7zm8.192 1.899a3.893 3.893 0 0 0-3.888-3.889S9.334 5 8.167 5C7 5 7 6.167 7 6.167v11.666C7 19 8.167 19 8.167 19l5.572.01c2.333 0 4.231-1.86 4.231-4.148a4.122 4.122 0 0 0-1.77-3.372 3.873 3.873 0 0 0 .992-2.591z"
               fill-rule="evenodd"
@@ -27,14 +37,22 @@
           :class="{ 'is-active': isActive.italic() }"
           @click="commands.italic"
         >
-          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+          <svg
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
             <path
               d="M15.751 5h-5.502a.751.751 0 0 0-.749.75c0 .417.336.75.749.75H12l-2 11H8.249a.751.751 0 0 0-.749.75c0 .417.336.75.749.75h5.502a.751.751 0 0 0 .749-.75.748.748 0 0 0-.749-.75H12l2-11h1.751a.751.751 0 0 0 .749-.75.748.748 0 0 0-.749-.75"
               fill-rule="evenodd"
             ></path>
           </svg>
         </button>
-        <div ref="colorPicker" class="relative inline-block">
+        <div
+          ref="colorPicker"
+          class="relative inline-block"
+        >
           <button
             v-tooltip.bottom="'颜色'"
             type="button"
@@ -51,14 +69,21 @@
               fill="currentColor"
               viewBox="0 0 24 24"
             >
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path fill-opacity=".36" d="M0 20h24v4H0z" />
               <path
-                d="M11 3L5.5 17h2.25l1.12-3h6.25l1.12 3h2.25L13 3h-2zm-1.38 9L12 5.67 14.38 12H9.62z"
+                d="M0 0h24v24H0z"
+                fill="none"
               />
+              <path
+                fill-opacity=".36"
+                d="M0 20h24v4H0z"
+              />
+              <path d="M11 3L5.5 17h2.25l1.12-3h6.25l1.12 3h2.25L13 3h-2zm-1.38 9L12 5.67 14.38 12H9.62z" />
             </svg>
           </button>
-          <div v-if="colorPickerVisible" class="color-picker">
+          <div
+            v-if="colorPickerVisible"
+            class="color-picker"
+          >
             <div style="display:flex;">
               <div
                 :class="{
@@ -80,16 +105,29 @@
               </div>
             </div>
             <div class="flex flex-wrap py-4 px-2 justify-center">
-              <div v-for="color in colors" :key="color" class="">
+              <div
+                v-for="color in colors"
+                :key="color"
+              >
                 <button
                   type="button"
                   class="hover:border border-gray cursor-pointer"
-                  style="border-radius:999px; width:40px;height:40px; margin-left:2px;margin-right:2px;"
+                  style="border-radius:0px; width:40px;height:20px;border:0; margin-left:2px;margin-right:2px;"
                   :style="{ 'background-color': color }"
                   @click="selectColor(commands, color)"
                 ></button>
               </div>
-
+              <div
+                class="flex items-center"
+                style="margin-top:20px;"
+              >
+                <span style="margin-right:10px;">其他色值(16进制)</span>
+                <input
+                  maxlength="7"
+                  v-model.trim="userColor"
+                  @blur="selectColor(commands, userColor)"
+                />
+              </div>
               <!-- <div class="flex items-center">
                 <span>其他颜色</span>
                 <el-color-picker
@@ -107,7 +145,12 @@
           class="menubar__button"
           @click="$refs.uploadInput.click()"
         >
-          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+          <svg
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
             <path
               d="M21 17.444C21 18.3 20.1 19 19 19H5c-1.1 0-2-.7-2-1.556V6.556C3 5.7 3.9 5 5 5h14c1.1 0 2 .7 2 1.556v10.888zm-9.437-3.919a.5.5 0 0 1-.862.013l-1.26-2.065a.5.5 0 0 0-.861.012l-2.153 3.767a.5.5 0 0 0 .435.748h10.292a.5.5 0 0 0 .438-.741L14.573 9.78a.5.5 0 0 0-.872-.006l-2.138 3.75z"
               fill-rule="evenodd"
@@ -127,7 +170,12 @@
           :class="{ 'is-active': isActive.bullet_list() }"
           @click="commands.bullet_list"
         >
-          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+          <svg
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
             <path
               d="M9 7c0-.552.456-1 .995-1h8.01c.55 0 .995.444.995 1 0 .552-.456 1-.995 1h-8.01A.995.995 0 0 1 9 7zM6 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3-6c0-.552.456-1 .995-1h8.01c.55 0 .995.444.995 1 0 .552-.456 1-.995 1h-8.01A.995.995 0 0 1 9 12zm0 5c0-.552.456-1 .995-1h8.01c.55 0 .995.444.995 1 0 .552-.456 1-.995 1h-8.01A.995.995 0 0 1 9 17z"
               fill-rule="evenodd"
@@ -142,7 +190,12 @@
           :class="{ 'is-active': isActive.ordered_list() }"
           @click="commands.ordered_list"
         >
-          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+          <svg
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
             <path
               d="M9 6.5c0-.552.456-1 .995-1h8.01c.55 0 .995.444.995 1 0 .552-.456 1-.995 1h-8.01A.995.995 0 0 1 9 6.5zM5.884 7.893v-2.09h-.643L5.402 5h1.285v2.893h-.803zm.898 3.83l-.393.395h.862v.733H5v-.482l1.057-.892c.371-.312.461-.434.463-.566.003-.202-.135-.368-.396-.368-.289 0-.418.206-.418.43H5c0-.642.482-1.073 1.125-1.073s1.125.457 1.125.945c0 .307-.106.516-.468.877zM9 11.5c0-.552.456-1 .995-1h8.01c.55 0 .995.444.995 1 0 .552-.456 1-.995 1h-8.01a.995.995 0 0 1-.995-1zm0 5c0-.552.456-1 .995-1h8.01c.55 0 .995.444.995 1 0 .552-.456 1-.995 1h-8.01a.995.995 0 0 1-.995-1zm-1.759.624c0 .14-.025.27-.076.388a.902.902 0 0 1-.217.309 1.017 1.017 0 0 1-.336.205c-.13.05-.275.074-.437.074-.166 0-.32-.027-.462-.08a1.166 1.166 0 0 1-.367-.217 1.062 1.062 0 0 1-.246-.318.914.914 0 0 1-.1-.38v-.055h.765v.054a.343.343 0 0 0 .367.352c.117 0 .207-.03.27-.09.062-.06.093-.152.093-.277 0-.117-.039-.206-.117-.268a.506.506 0 0 0-.32-.091h-.14v-.516h.144c.117 0 .205-.03.264-.09a.31.31 0 0 0 .087-.226.27.27 0 0 0-.087-.209.332.332 0 0 0-.233-.08c-.107 0-.185.027-.236.08a.275.275 0 0 0-.076.197v.055h-.695v-.055a.915.915 0 0 1 .295-.644c.178-.161.436-.242.775-.242.14 0 .27.021.39.064s.224.102.312.176a.802.802 0 0 1 .207.262c.05.1.075.206.075.318 0 .258-.116.46-.348.605v.008a.625.625 0 0 1 .193.119.777.777 0 0 1 .256.572z"
               fill-rule="evenodd"
@@ -156,7 +209,12 @@
           :class="{ 'is-active': isActive.horizontal_rule() }"
           @click="commands.horizontal_rule"
         >
-          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+          <svg
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
             <path
               d="M4 7c0-.552.445-1 1-1h14c.552 0 1 .444 1 1 0 .552-.445 1-1 1H5c-.552 0-1-.444-1-1zm0 5a1 1 0 0 1 1.01-1h1.98a1 1 0 1 1 0 2H5.01C4.451 13 4 12.556 4 12zm6 0a1 1 0 0 1 1.01-1h1.98a1 1 0 1 1 0 2h-1.98c-.558 0-1.01-.444-1.01-1zm6 0a1 1 0 0 1 1.01-1h1.98a1 1 0 1 1 0 2h-1.98c-.558 0-1.01-.444-1.01-1zM4 17c0-.552.445-1 1-1h14c.552 0 1 .444 1 1 0 .552-.445 1-1 1H5c-.552 0-1-.444-1-1z"
               fill-rule="evenodd"
@@ -177,10 +235,11 @@
             height="24"
             viewBox="0 0 24 24"
           >
-            <path d="M0 0h24v24H0z" fill="none" />
             <path
-              d="M12 17c3.31 0 6-2.69 6-6V3h-2.5v8c0 1.93-1.57 3.5-3.5 3.5S8.5 12.93 8.5 11V3H6v8c0 3.31 2.69 6 6 6zm-7 2v2h14v-2H5z"
+              d="M0 0h24v24H0z"
+              fill="none"
             />
+            <path d="M12 17c3.31 0 6-2.69 6-6V3h-2.5v8c0 1.93-1.57 3.5-3.5 3.5S8.5 12.93 8.5 11V3H6v8c0 3.31 2.69 6 6 6zm-7 2v2h14v-2H5z" />
           </svg>
         </button>
 
@@ -200,10 +259,16 @@
             viewBox="0 0 24 24"
           >
             <defs>
-              <path id="a" d="M0 0h24v24H0V0z" />
+              <path
+                id="a"
+                d="M0 0h24v24H0V0z"
+              />
             </defs>
             <clipPath id="b">
-              <use xlink:href="#a" overflow="visible" />
+              <use
+                xlink:href="#a"
+                overflow="visible"
+              />
             </clipPath>
             <path
               clip-path="url(#b)"
@@ -218,7 +283,12 @@
           :class="{ 'is-active': isActive.blockquote() }"
           @click="commands.blockquote"
         >
-          <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+          <svg
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+          >
             <path
               d="M17.975 12.209c.504.454.822 1.05.952 1.792.061.35.055.715-.022 1.096-.075.379-.209.718-.4 1.018-.465.73-1.155 1.175-2.07 1.337-.874.153-1.684-.06-2.432-.638a3.6 3.6 0 0 1-.916-1.043 3.92 3.92 0 0 1-.506-1.336c-.172-.98-.03-2.026.425-3.142.455-1.116 1.155-2.118 2.1-3.007.8-.757 1.456-1.182 1.97-1.273a.72.72 0 0 1 .544.104.656.656 0 0 1 .286.452c.054.31-.095.601-.45.877-.856.67-1.455 1.27-1.796 1.798-.323.513-.467.873-.43 1.079.034.196.21.287.524.274l.191-.001.249-.029a2.436 2.436 0 0 1 1.781.642zm-7.51 0c.504.454.821 1.05.951 1.792.062.35.056.715-.02 1.096-.077.379-.21.718-.401 1.018-.465.73-1.155 1.175-2.07 1.337-.874.153-1.684-.06-2.432-.638a3.6 3.6 0 0 1-.916-1.043 3.92 3.92 0 0 1-.506-1.336c-.172-.98-.03-2.026.424-3.142.455-1.116 1.156-2.118 2.101-3.007.8-.757 1.456-1.182 1.97-1.273a.72.72 0 0 1 .544.104.656.656 0 0 1 .285.452c.055.31-.094.601-.45.877-.855.67-1.454 1.27-1.796 1.798-.322.513-.466.873-.43 1.079.034.196.21.287.525.274l.191-.001.248-.029a2.436 2.436 0 0 1 1.782.642z"
               fill-rule="evenodd"
@@ -254,7 +324,10 @@
           <span class="button-title">H3</span>
         </button>
 
-        <div ref="fontSiziePicker" class="font-size-picker-container">
+        <div
+          ref="fontSiziePicker"
+          class="font-size-picker-container"
+        >
           <button
             v-tooltip.bottom="'字号'"
             type="button"
@@ -265,14 +338,23 @@
             }"
             @click="fontSizePickerVisible = !fontSizePickerVisible"
           >
-            <span ref="fontButton" class="menubar__button--font">
+            <span
+              ref="fontButton"
+              class="menubar__button--font"
+            >
               {{
                 activeFontSize(getMarkAttrs, isActive) || currentFontSize
               }}px<i class="el-icon-caret-bottom"></i>
             </span>
           </button>
-          <ul v-if="fontSizePickerVisible" class="font-size-picker">
-            <li v-for="size in fontsizes" :key="size">
+          <ul
+            v-if="fontSizePickerVisible"
+            class="font-size-picker"
+          >
+            <li
+              v-for="size in fontsizes"
+              :key="size"
+            >
               <button
                 type="button"
                 class="font-size-picker-button"
@@ -298,10 +380,11 @@
             height="24"
             viewBox="0 0 24 24"
           >
+            <path d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z" />
             <path
-              d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z"
+              d="M0 0h24v24H0z"
+              fill="none"
             />
-            <path d="M0 0h24v24H0z" fill="none" />
           </svg>
         </button>
         <button
@@ -318,10 +401,11 @@
             height="24"
             viewBox="0 0 24 24"
           >
+            <path d="M7 15v2h10v-2H7zm-4 6h18v-2H3v2zm0-8h18v-2H3v2zm4-6v2h10V7H7zM3 3v2h18V3H3z" />
             <path
-              d="M7 15v2h10v-2H7zm-4 6h18v-2H3v2zm0-8h18v-2H3v2zm4-6v2h10V7H7zM3 3v2h18V3H3z"
+              d="M0 0h24v24H0z"
+              fill="none"
             />
-            <path d="M0 0h24v24H0z" fill="none" />
           </svg>
         </button>
         <button
@@ -338,10 +422,11 @@
             height="24"
             viewBox="0 0 24 24"
           >
+            <path d="M3 21h18v-2H3v2zm6-4h12v-2H9v2zm-6-4h18v-2H3v2zm6-4h12V7H9v2zM3 3v2h18V3H3z" />
             <path
-              d="M3 21h18v-2H3v2zm6-4h12v-2H9v2zm-6-4h18v-2H3v2zm6-4h12V7H9v2zM3 3v2h18V3H3z"
+              d="M0 0h24v24H0z"
+              fill="none"
             />
-            <path d="M0 0h24v24H0z" fill="none" />
           </svg>
         </button>
         <button
@@ -358,10 +443,11 @@
             height="24"
             viewBox="0 0 24 24"
           >
+            <path d="M3 21h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V7H3v2zm0-6v2h18V3H3z" />
             <path
-              d="M3 21h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V7H3v2zm0-6v2h18V3H3z"
+              d="M0 0h24v24H0z"
+              fill="none"
             />
-            <path d="M0 0h24v24H0z" fill="none" />
           </svg>
         </button>
       </div>
@@ -433,7 +519,7 @@ export default {
   },
   data() {
     return {
-      userColor: '',
+      userColor: '#',
       colorFill: false,
       fontSizePickerVisible: false,
       colorPickerVisible: false,
@@ -610,6 +696,7 @@ export default {
     selectColor(commands, color) {
       const command = this.colorFill ? commands.fill : commands.color
       command({ color })
+      this.userColor = '#'
       this.colorPickerVisible = false
     },
     fileSelect(event, command) {
