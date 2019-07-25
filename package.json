@@ -1,6 +1,6 @@
 {
   "name": "@baoshishu/vue-editor",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "dist/vue-editor.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "prosemirror-utils": "^0.9.4",
-    "tiptap": "^1.23.3",
-    "tiptap-commands": "^1.10.10",
-    "tiptap-extensions": "^1.24.3",
+    "tiptap": "^1.23.5",
+    "tiptap-commands": "^1.10.11",
+    "tiptap-extensions": "^1.25.0",
     "v-tooltip": "^2.0.2"
   },
   "devDependencies": {
