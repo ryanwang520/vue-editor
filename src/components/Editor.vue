@@ -384,6 +384,7 @@
           </svg>
         </button>
         <button
+          type="button"
           v-tooltip.bottom="'放弃'"
           class="menubar__button"
           @click="commands.undo"
@@ -404,6 +405,7 @@
 
         <button
           v-tooltip.bottom="'重做'"
+          type="button"
           class="menubar__button"
           @click="commands.redo"
         >
