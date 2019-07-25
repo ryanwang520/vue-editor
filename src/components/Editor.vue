@@ -80,16 +80,24 @@
               </div>
             </div>
             <div class="flex flex-wrap py-4 px-2 justify-center">
-              <div v-for="color in colors" :key="color" class="">
+              <div v-for="color in colors" :key="color">
                 <button
                   type="button"
                   class="hover:border border-gray cursor-pointer"
-                  style="border-radius:999px; width:40px;height:40px; margin-left:2px;margin-right:2px;"
+                  style="border-radius:0px; width:24px;height:24px;border:0; margin-left:2px;margin-right:2px;"
                   :style="{ 'background-color': color }"
                   @click="selectColor(commands, color)"
                 ></button>
               </div>
-
+              <div class="flex items-center" style="margin-top:20px;">
+                <span style="margin-right:10px;">其他色值(16进制)</span>
+                <input
+                  maxlength="7"
+                  placeholder="#开头"
+                  v-model.trim="userColor"
+                  @blur="selectColor(commands, userColor)"
+                />
+              </div>
               <!-- <div class="flex items-center">
                 <span>其他颜色</span>
                 <el-color-picker
@@ -453,18 +461,76 @@ export default {
     },
     colors() {
       const colors = [
-        'black',
-        '#333',
-        '#666',
-        '#999',
-        'white',
-        '#b83280',
-        'red',
-        'hsl(215, 100%, 48%)',
-        '#4c51bf',
-        '#48bb78',
-        '#38b2ac',
-        '#f6ad55',
+        'rgb(0, 0, 0)',
+        'rgb(38, 38, 38)',
+        'rgb(89, 89, 89)',
+        'rgb(140, 140, 140)',
+        'rgb(191, 191, 191)',
+        'rgb(217, 217, 217)',
+        'rgb(233, 233, 233)',
+        'rgb(245, 245, 245)',
+        'rgb(250, 250, 250)',
+        'rgb(255, 255, 255)',
+        'rgb(245, 34, 45)',
+        'rgb(250, 84, 28)',
+        'rgb(250, 140, 22)',
+        'rgb(250, 219, 20)',
+        'rgb(82, 196, 26)',
+        'rgb(19, 194, 194)',
+        'rgb(24, 144, 255)',
+        'rgb(47, 84, 235)',
+        'rgb(114, 46, 209)',
+        'rgb(235, 47, 150)',
+        'rgb(255, 232, 230)',
+        'rgb(255, 236, 224)',
+        'rgb(255, 239, 209)',
+        'rgb(255, 248, 189)',
+        'rgb(228, 247, 210)',
+        'rgb(211, 245, 240)',
+        'rgb(212, 238, 252)',
+        'rgb(222, 232, 252)',
+        'rgb(239, 225, 250)',
+        'rgb(250, 225, 235)',
+        'rgb(255, 163, 158)',
+        'rgb(255, 187, 150)',
+        'rgb(255, 213, 145)',
+        'rgb(255, 240, 143)',
+        'rgb(183, 235, 143)',
+        'rgb(135, 232, 222)',
+        'rgb(145, 213, 255)',
+        'rgb(173, 198, 255)',
+        'rgb(211, 173, 247)',
+        'rgb(255, 173, 210)',
+        'rgb(255, 77, 79)',
+        'rgb(255, 122, 69)',
+        'rgb(255, 169, 64)',
+        'rgb(255, 236, 61)',
+        'rgb(115, 209, 61)',
+        'rgb(54, 207, 201)',
+        'rgb(64, 169, 255)',
+        'rgb(89, 126, 247)',
+        'rgb(146, 84, 222)',
+        'rgb(247, 89, 171)',
+        'rgb(207, 19, 34)',
+        'rgb(212, 56, 13)',
+        'rgb(212, 107, 8)',
+        'rgb(212, 177, 6)',
+        'rgb(56, 158, 13)',
+        'rgb(8, 151, 156)',
+        'rgb(9, 109, 217)',
+        'rgb(29, 57, 196)',
+        'rgb(83, 29, 171)',
+        'rgb(196, 29, 127)',
+        'rgb(130, 0, 20)',
+        'rgb(135, 20, 0)',
+        'rgb(135, 56, 0)',
+        'rgb(97, 71, 0)',
+        'rgb(19, 82, 0)',
+        'rgb(0, 71, 79)',
+        'rgb(0, 58, 140)',
+        'rgb(6, 17, 120)',
+        'rgb(34, 7, 94)',
+        'rgb(120, 6, 80)',
       ]
       return colors
     },
@@ -608,8 +674,14 @@ export default {
     },
 
     selectColor(commands, color) {
+      const pattern = /^#[0-9a-fA-F]{6}$/
+      if (!pattern.test(color)) {
+        alert('色值不规范')
+        return
+      }
       const command = this.colorFill ? commands.fill : commands.color
       command({ color })
+      this.userColor = ''
       this.colorPickerVisible = false
     },
     fileSelect(event, command) {
