@@ -90,13 +90,24 @@
                 ></button>
               </div>
               <div class="flex items-center" style="margin-top:20px;">
-                <span style="margin-right:10px;">其他色值(16进制)</span>
-                <input
-                  maxlength="7"
-                  placeholder="#开头"
-                  v-model.trim="userColor"
-                  @blur="selectColor(commands, userColor)"
-                />
+                <form
+                  class="flex"
+                  :style="{ 'align-items': 'flex-start' }"
+                  @submit.prevent="selectColor(commands, userColor, true)"
+                >
+                  <div class="flex flex-col">
+                    <input
+                      class="color-input"
+                      maxlength="7"
+                      placeholder="#FFFFFF"
+                      v-model.trim="userColor"
+                    />
+                    <span class="error">{{ colorError }}</span>
+                  </div>
+                  <button type="submit" class="color-confirm-button">
+                    确认
+                  </button>
+                </form>
               </div>
               <!-- <div class="flex items-center">
                 <span>其他颜色</span>
@@ -372,6 +383,43 @@
             <path d="M0 0h24v24H0z" fill="none" />
           </svg>
         </button>
+        <button
+          v-tooltip.bottom="'放弃'"
+          class="menubar__button"
+          @click="commands.undo"
+        >
+          <svg
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"
+            />
+          </svg>
+        </button>
+
+        <button
+          v-tooltip.bottom="'重做'"
+          class="menubar__button"
+          @click="commands.redo"
+        >
+          <svg
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M18.4 10.6C16.55 8.99 14.15 8 11.5 8c-4.65 0-8.58 3.03-9.96 7.22L3.9 16c1.05-3.19 4.05-5.5 7.6-5.5 1.95 0 3.73.72 5.12 1.88L13 16h9V7l-3.6 3.6z"
+            />
+          </svg>
+        </button>
       </div>
     </editor-menu-bar>
     <editor-content
@@ -431,7 +479,7 @@ export default {
     },
     width: {
       required: false,
-      default: '700px',
+      default: '760px',
       type: String,
     },
     imageProvider: {
@@ -441,6 +489,7 @@ export default {
   },
   data() {
     return {
+      colorError: '',
       userColor: '',
       colorFill: false,
       fontSizePickerVisible: false,
@@ -551,6 +600,9 @@ export default {
     },
   },
   watch: {
+    userColor() {
+      this.colorError = ''
+    },
     value(newVal, oldVal) {
       if (!oldVal && newVal) {
         this.editor.setContent(newVal)
@@ -673,15 +725,16 @@ export default {
       this.fontSizePickerVisible = false
     },
 
-    selectColor(commands, color) {
-      const pattern = /^#[0-9a-fA-F]{6}$/
-      if (!pattern.test(color)) {
-        alert('色值不规范')
-        return
+    selectColor(commands, color, validate) {
+      if (validate) {
+        const pattern = /^#[0-9a-fA-F]{6}$/
+        if (!pattern.test(color)) {
+          this.colorError = '无效的色值'
+          return
+        }
       }
       const command = this.colorFill ? commands.fill : commands.color
       command({ color })
-      this.userColor = ''
       this.colorPickerVisible = false
     },
     fileSelect(event, command) {
@@ -750,6 +803,9 @@ $color-grey: #dddddd;
 .flex-wrap {
   flex-wrap: wrap;
 }
+.flex-col {
+  flex-direction: column;
+}
 .flex-grow {
   flex: 1;
 }
@@ -778,6 +834,45 @@ $color-grey: #dddddd;
 }
 
 .vue-editor {
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  .color-confirm-button {
+    margin-left: 15px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #5ba0ff;
+    border-color: #5ba0ff;
+    padding: 7px 8px;
+    font-size: 12px;
+    border-radius: 3px;
+    outline: none;
+    transition: 0.1s;
+    font-weight: 500;
+    &:hover,
+    &:focus {
+      background: #7cb3ff;
+      border-color: #7cb3ff;
+      color: #fff;
+    }
+  }
+  .color-input {
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    font-size: 14px;
+    color: #606266;
+    outline: none;
+    padding: 6px 8px;
+    &:focus {
+      outline: none;
+      border-color: #5ba0ff;
+    }
+  }
+
   position: relative;
   line-height: 1.5;
   font-size: 16px;
