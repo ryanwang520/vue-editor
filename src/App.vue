@@ -11,11 +11,12 @@ import Editor from '@/index.js'
 export default {
   data() {
     return {
-      data: 'hello',
+      data:
+        '<p><video controls><source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"></video></p>',
       imageProvider: {
         name: 'qiniu',
         token:
-          '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:8lM-4tOO3g9IipeFyLloLN6xvvE=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTU2MzgwMzUyOX0=',
+          '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:0PSey7kMtMFbU84mrM4WYeVzfgA=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTU2NTY4OTM3MH0=',
         domain: 'cdn-testing.zanquan.net',
       },
     }

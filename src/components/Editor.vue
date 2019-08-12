@@ -145,6 +145,34 @@
           style="display:none"
           @change="fileSelect($event, commands.image)"
         />
+        <div ref="videoPicker" class="relative inline-block">
+          <button
+            v-tooltip.bottom="'视频链接'"
+            aria-label="视频"
+            type="button"
+            @click="videoPickerVisible = true"
+            class="menubar__button"
+          >
+            <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"
+              />
+            </svg>
+          </button>
+          <div v-if="videoPickerVisible" class="flex items-center video-picker">
+            <form @submit.prevent="addVideo(commands)">
+              <label for="vue-editor-video-input">视频地址：</label>
+              <input
+                class="video-input"
+                style="margin-right:12px;"
+                id="vue-editor-video-input"
+                v-model="videoAddress"
+              />
+              <button type="submit">保存</button>
+            </form>
+          </div>
+        </div>
         <button
           v-tooltip.bottom="'无序列表'"
           aria-label="无序列表"
@@ -462,6 +490,7 @@ import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import FontSize from './FontSize'
 import Color from './Color'
 import ColorFill from './ColorFill'
+
 import {
   CodeBlock,
   HardBreak,
@@ -482,6 +511,7 @@ import Image from './Image'
 import Heading from './Heading'
 import Paragraph from './Paragraph'
 import Blockquote from './Blockquote'
+import Video from './Video'
 import ListItem from './ListItem'
 import { isActive as isTextAlignActive, setTextAlign } from '../TextAlign'
 
@@ -503,7 +533,7 @@ export default {
     },
     width: {
       required: false,
-      default: '760px',
+      default: '800px',
       type: String,
     },
     imageProvider: {
@@ -519,6 +549,8 @@ export default {
       fontSizePickerVisible: false,
       colorPickerVisible: false,
       currentFontSize: 16,
+      videoPickerVisible: false,
+      videoAddress: '',
       linkMenuIsActive: false,
       linkUrl: null,
       editor: null,
@@ -644,6 +676,7 @@ export default {
         new FontSize({ sizes: this.fontsizes }),
         this.imageUploader,
         new Blockquote(),
+        new Video(),
         new CodeBlock(),
         new Color(),
         new ColorFill(),
@@ -679,16 +712,34 @@ export default {
       if (!isClickInside) {
         this.colorPickerVisible = false
       }
+      isClickInside = this.$refs.videoPicker.contains(event.target)
+      if (!isClickInside) {
+        this.videoPickerVisible = false
+      }
     }
 
     document.addEventListener('click', this.closePicker)
+    this.closeOnEsc = e => {
+      if (e.key == 'Escape' || e.key == 'Esc') {
+        this.fontSizePickerVisible = false
+        this.colorPickerVisible = false
+        this.videoPickerVisible = false
+      }
+    }
+    document.addEventListener('keyup', this.closeOnEsc)
   },
   beforeDestroy() {
     document.removeEventListener('click', this.closePicker)
+    document.removeEventListener('keyup', this.closeOnEsc)
     this.editor.destroy()
   },
 
   methods: {
+    addVideo(commands) {
+      commands.video({ src: this.videoAddress })
+      this.videoAddress = ''
+      this.videoPickerVisible = false
+    },
     isHeadingActive({ level }) {
       return nodeIsActive(this.state, this.editor.schema.nodes.heading, {
         level,
@@ -858,6 +909,9 @@ $color-grey: #dddddd;
 }
 
 .vue-editor {
+  video {
+    width: 300px;
+  }
   .error {
     color: red;
     font-size: 12px;
@@ -884,13 +938,24 @@ $color-grey: #dddddd;
   }
   .color-input {
     background-color: #fff;
-    background-image: none;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
     font-size: 14px;
     color: #606266;
     outline: none;
     padding: 6px 8px;
+    &:focus {
+      outline: none;
+      border-color: #5ba0ff;
+    }
+  }
+  .video-input {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    font-size: 14px;
+    color: #606266;
+    outline: none;
     &:focus {
       outline: none;
       border-color: #5ba0ff;
@@ -1146,6 +1211,19 @@ $color-grey: #dddddd;
     left: 0;
     padding: 2px 2px;
     transform: translateX(-50%);
+  }
+  .video-picker {
+    z-index: 100;
+    position: absolute;
+    width: 300px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    top: 120%;
+    left: 0;
+    padding: 8px 6px;
+    /* transform: translateX(-50%); */
   }
   .font-size-picker > li {
     width: 100%;
