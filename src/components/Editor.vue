@@ -6,6 +6,7 @@
     >
       <div class="menubar">
         <button
+          aria-label="加粗"
           v-tooltip.bottom="'加粗'"
           type="button"
           class="menubar__button"
@@ -22,6 +23,7 @@
 
         <button
           v-tooltip.bottom="'斜体'"
+          aria-label="斜体"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.italic() }"
@@ -37,6 +39,7 @@
         <div ref="colorPicker" class="relative inline-block">
           <button
             v-tooltip.bottom="'颜色'"
+            aria-label="颜色"
             type="button"
             class="menubar__button relative"
             :class="{
@@ -61,6 +64,7 @@
           <div v-if="colorPickerVisible" class="color-picker">
             <div style="display:flex;">
               <div
+                tabindex="0"
                 :class="{
                   'text-primary-dark border-b-2 border-primary-dark': !colorFill,
                 }"
@@ -70,6 +74,7 @@
                 文字
               </div>
               <div
+                tabindex="0"
                 :class="{
                   'text-primary-dark border-b-2 border-primary-dark': colorFill,
                 }"
@@ -122,6 +127,7 @@
         </div>
         <button
           v-tooltip.bottom="'上传图片（支持拖拽和粘贴）'"
+          aria-label="图片"
           type="button"
           class="menubar__button"
           @click="$refs.uploadInput.click()"
@@ -139,8 +145,37 @@
           style="display:none"
           @change="fileSelect($event, commands.image)"
         />
+        <div ref="videoPicker" class="relative inline-block">
+          <button
+            v-tooltip.bottom="'视频链接'"
+            aria-label="视频"
+            type="button"
+            @click="videoPickerVisible = true"
+            class="menubar__button"
+          >
+            <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"
+              />
+            </svg>
+          </button>
+          <div v-if="videoPickerVisible" class="flex items-center video-picker">
+            <form @submit.prevent="addVideo(commands)">
+              <label for="vue-editor-video-input">视频地址：</label>
+              <input
+                class="video-input"
+                style="margin-right:12px;"
+                id="vue-editor-video-input"
+                v-model="videoAddress"
+              />
+              <button type="submit">保存</button>
+            </form>
+          </div>
+        </div>
         <button
           v-tooltip.bottom="'无序列表'"
+          aria-label="无序列表"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.bullet_list() }"
@@ -156,6 +191,7 @@
 
         <button
           v-tooltip.bottom="'有序列表'"
+          aria-label="有序列表"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.ordered_list() }"
@@ -170,6 +206,7 @@
         </button>
         <button
           v-tooltip.bottom="'插入分割线'"
+          aria-label="分割线"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.horizontal_rule() }"
@@ -184,6 +221,7 @@
         </button>
         <button
           v-tooltip.bottom="'下划线'"
+          aria-label="下划线"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.underline() }"
@@ -205,6 +243,7 @@
 
         <button
           v-tooltip.bottom="'删除线'"
+          aria-label="删除线"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.strike() }"
@@ -232,6 +271,7 @@
         </button>
         <button
           v-tooltip.bottom="'引用块'"
+          aria-label="引用快"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.blockquote() }"
@@ -247,6 +287,7 @@
 
         <button
           v-tooltip.bottom="'一级标题'"
+          aria-label="一级标题"
           type="button"
           class="menubar__button menubar__title"
           :class="{ 'is-active': isHeadingActive({ level: 1 }) }"
@@ -256,6 +297,7 @@
         </button>
         <button
           v-tooltip.bottom="'二级标题'"
+          aria-label="二级标题"
           type="button"
           class="menubar__button menubar__title"
           :class="{ 'is-active': isHeadingActive({ level: 2 }) }"
@@ -265,6 +307,7 @@
         </button>
         <button
           v-tooltip.bottom="'三级标题'"
+          aria-label="三级标题"
           type="button"
           class="menubar__button menubar__title"
           :class="{ 'is-active': isHeadingActive({ level: 3 }) }"
@@ -276,6 +319,7 @@
         <div ref="fontSiziePicker" class="font-size-picker-container">
           <button
             v-tooltip.bottom="'字号'"
+            aria-label="字号"
             type="button"
             class="menubar__button menubar__title"
             style="position:relative;"
@@ -305,6 +349,7 @@
 
         <button
           v-tooltip.bottom="'居左'"
+          aria-label="居左"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActiveAlign('left') }"
@@ -325,6 +370,7 @@
         </button>
         <button
           v-tooltip.bottom="'居中'"
+          aria-label="居中"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActiveAlign('center') }"
@@ -345,6 +391,7 @@
         </button>
         <button
           v-tooltip.bottom="'居右'"
+          aria-label="居右"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActiveAlign('right') }"
@@ -365,6 +412,7 @@
         </button>
         <button
           v-tooltip.bottom="'两端'"
+          aria-label="两端"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActiveAlign('justify') }"
@@ -386,6 +434,7 @@
         <button
           type="button"
           v-tooltip.bottom="'放弃'"
+          aria-label="放弃"
           class="menubar__button"
           @click="commands.undo"
         >
@@ -405,6 +454,7 @@
 
         <button
           v-tooltip.bottom="'重做'"
+          aria-label="重做"
           type="button"
           class="menubar__button"
           @click="commands.redo"
@@ -440,6 +490,7 @@ import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
 import FontSize from './FontSize'
 import Color from './Color'
 import ColorFill from './ColorFill'
+
 import {
   CodeBlock,
   HardBreak,
@@ -460,6 +511,7 @@ import Image from './Image'
 import Heading from './Heading'
 import Paragraph from './Paragraph'
 import Blockquote from './Blockquote'
+import Video from './Video'
 import ListItem from './ListItem'
 import { isActive as isTextAlignActive, setTextAlign } from '../TextAlign'
 
@@ -481,7 +533,7 @@ export default {
     },
     width: {
       required: false,
-      default: '760px',
+      default: '800px',
       type: String,
     },
     imageProvider: {
@@ -497,6 +549,8 @@ export default {
       fontSizePickerVisible: false,
       colorPickerVisible: false,
       currentFontSize: 16,
+      videoPickerVisible: false,
+      videoAddress: '',
       linkMenuIsActive: false,
       linkUrl: null,
       editor: null,
@@ -622,6 +676,7 @@ export default {
         new FontSize({ sizes: this.fontsizes }),
         this.imageUploader,
         new Blockquote(),
+        new Video(),
         new CodeBlock(),
         new Color(),
         new ColorFill(),
@@ -657,16 +712,34 @@ export default {
       if (!isClickInside) {
         this.colorPickerVisible = false
       }
+      isClickInside = this.$refs.videoPicker.contains(event.target)
+      if (!isClickInside) {
+        this.videoPickerVisible = false
+      }
     }
 
     document.addEventListener('click', this.closePicker)
+    this.closeOnEsc = e => {
+      if (e.key == 'Escape' || e.key == 'Esc') {
+        this.fontSizePickerVisible = false
+        this.colorPickerVisible = false
+        this.videoPickerVisible = false
+      }
+    }
+    document.addEventListener('keyup', this.closeOnEsc)
   },
   beforeDestroy() {
     document.removeEventListener('click', this.closePicker)
+    document.removeEventListener('keyup', this.closeOnEsc)
     this.editor.destroy()
   },
 
   methods: {
+    addVideo(commands) {
+      commands.video({ src: this.videoAddress })
+      this.videoAddress = ''
+      this.videoPickerVisible = false
+    },
     isHeadingActive({ level }) {
       return nodeIsActive(this.state, this.editor.schema.nodes.heading, {
         level,
@@ -836,6 +909,9 @@ $color-grey: #dddddd;
 }
 
 .vue-editor {
+  video {
+    width: 300px;
+  }
   .error {
     color: red;
     font-size: 12px;
@@ -862,13 +938,24 @@ $color-grey: #dddddd;
   }
   .color-input {
     background-color: #fff;
-    background-image: none;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
     font-size: 14px;
     color: #606266;
     outline: none;
     padding: 6px 8px;
+    &:focus {
+      outline: none;
+      border-color: #5ba0ff;
+    }
+  }
+  .video-input {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    font-size: 14px;
+    color: #606266;
+    outline: none;
     &:focus {
       outline: none;
       border-color: #5ba0ff;
@@ -1124,6 +1211,19 @@ $color-grey: #dddddd;
     left: 0;
     padding: 2px 2px;
     transform: translateX(-50%);
+  }
+  .video-picker {
+    z-index: 100;
+    position: absolute;
+    width: 300px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    top: 120%;
+    left: 0;
+    padding: 8px 6px;
+    /* transform: translateX(-50%); */
   }
   .font-size-picker > li {
     width: 100%;
