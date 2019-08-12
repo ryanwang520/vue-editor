@@ -6,6 +6,7 @@
     >
       <div class="menubar">
         <button
+          aria-label="加粗"
           v-tooltip.bottom="'加粗'"
           type="button"
           class="menubar__button"
@@ -22,6 +23,7 @@
 
         <button
           v-tooltip.bottom="'斜体'"
+          aria-label="斜体"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.italic() }"
@@ -37,6 +39,7 @@
         <div ref="colorPicker" class="relative inline-block">
           <button
             v-tooltip.bottom="'颜色'"
+            aria-label="颜色"
             type="button"
             class="menubar__button relative"
             :class="{
@@ -61,6 +64,7 @@
           <div v-if="colorPickerVisible" class="color-picker">
             <div style="display:flex;">
               <div
+                tabindex="0"
                 :class="{
                   'text-primary-dark border-b-2 border-primary-dark': !colorFill,
                 }"
@@ -70,6 +74,7 @@
                 文字
               </div>
               <div
+                tabindex="0"
                 :class="{
                   'text-primary-dark border-b-2 border-primary-dark': colorFill,
                 }"
@@ -122,6 +127,7 @@
         </div>
         <button
           v-tooltip.bottom="'上传图片（支持拖拽和粘贴）'"
+          aria-label="图片"
           type="button"
           class="menubar__button"
           @click="$refs.uploadInput.click()"
@@ -141,6 +147,7 @@
         />
         <button
           v-tooltip.bottom="'无序列表'"
+          aria-label="无序列表"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.bullet_list() }"
@@ -156,6 +163,7 @@
 
         <button
           v-tooltip.bottom="'有序列表'"
+          aria-label="有序列表"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.ordered_list() }"
@@ -170,6 +178,7 @@
         </button>
         <button
           v-tooltip.bottom="'插入分割线'"
+          aria-label="分割线"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.horizontal_rule() }"
@@ -184,6 +193,7 @@
         </button>
         <button
           v-tooltip.bottom="'下划线'"
+          aria-label="下划线"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.underline() }"
@@ -205,6 +215,7 @@
 
         <button
           v-tooltip.bottom="'删除线'"
+          aria-label="删除线"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.strike() }"
@@ -232,6 +243,7 @@
         </button>
         <button
           v-tooltip.bottom="'引用块'"
+          aria-label="引用快"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActive.blockquote() }"
@@ -247,6 +259,7 @@
 
         <button
           v-tooltip.bottom="'一级标题'"
+          aria-label="一级标题"
           type="button"
           class="menubar__button menubar__title"
           :class="{ 'is-active': isHeadingActive({ level: 1 }) }"
@@ -256,6 +269,7 @@
         </button>
         <button
           v-tooltip.bottom="'二级标题'"
+          aria-label="二级标题"
           type="button"
           class="menubar__button menubar__title"
           :class="{ 'is-active': isHeadingActive({ level: 2 }) }"
@@ -265,6 +279,7 @@
         </button>
         <button
           v-tooltip.bottom="'三级标题'"
+          aria-label="三级标题"
           type="button"
           class="menubar__button menubar__title"
           :class="{ 'is-active': isHeadingActive({ level: 3 }) }"
@@ -276,6 +291,7 @@
         <div ref="fontSiziePicker" class="font-size-picker-container">
           <button
             v-tooltip.bottom="'字号'"
+            aria-label="字号"
             type="button"
             class="menubar__button menubar__title"
             style="position:relative;"
@@ -305,6 +321,7 @@
 
         <button
           v-tooltip.bottom="'居左'"
+          aria-label="居左"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActiveAlign('left') }"
@@ -325,6 +342,7 @@
         </button>
         <button
           v-tooltip.bottom="'居中'"
+          aria-label="居中"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActiveAlign('center') }"
@@ -345,6 +363,7 @@
         </button>
         <button
           v-tooltip.bottom="'居右'"
+          aria-label="居右"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActiveAlign('right') }"
@@ -365,6 +384,7 @@
         </button>
         <button
           v-tooltip.bottom="'两端'"
+          aria-label="两端"
           type="button"
           class="menubar__button"
           :class="{ 'is-active': isActiveAlign('justify') }"
@@ -386,6 +406,7 @@
         <button
           type="button"
           v-tooltip.bottom="'放弃'"
+          aria-label="放弃"
           class="menubar__button"
           @click="commands.undo"
         >
@@ -405,6 +426,7 @@
 
         <button
           v-tooltip.bottom="'重做'"
+          aria-label="重做"
           type="button"
           class="menubar__button"
           @click="commands.redo"
