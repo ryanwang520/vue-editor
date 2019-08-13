@@ -1,6 +1,6 @@
 {
   "name": "@baoshishu/vue-editor",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "main": "dist/vue-editor.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
