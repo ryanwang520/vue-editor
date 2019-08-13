@@ -36,7 +36,7 @@
             ></path>
           </svg>
         </button>
-        <div ref="colorPicker" class="relative inline-block">
+        <div ref="colorPicker" class="relative inline-block button-container">
           <button
             v-tooltip.bottom="'颜色'"
             aria-label="颜色"
@@ -138,7 +138,7 @@
           style="display:none"
           @change="fileSelect($event, commands.image)"
         />
-        <div ref="videoPicker" class="relative inline-block">
+        <div ref="videoPicker" class="relative inline-block button-container">
           <button
             v-tooltip.bottom="'视频链接'"
             aria-label="视频"
@@ -153,8 +153,11 @@
               />
             </svg>
           </button>
-          <div v-if="videoPickerVisible" class="flex items-center video-picker">
-            <form @submit.prevent="addVideo(commands.video)">
+          <div v-if="videoPickerVisible" class="">
+            <form
+              class="flex items-center video-picker"
+              @submit.prevent="addVideo(commands.video)"
+            >
               <label for="vue-editor-video-input">视频地址：</label>
               <input
                 ref="videoInput"
@@ -163,7 +166,7 @@
                 id="vue-editor-video-input"
                 v-model="videoAddress"
               />
-              <button type="submit">保存</button>
+              <button class="video-confirm-button" type="submit">保存</button>
             </form>
           </div>
         </div>
@@ -310,22 +313,24 @@
           <span class="button-title">H3</span>
         </button>
 
-        <div ref="fontSiziePicker" class="font-size-picker-container">
+        <div
+          ref="fontSiziePicker"
+          class="font-size-picker-container"
+          style="width:44px"
+        >
           <button
             v-tooltip.bottom="'字号'"
             aria-label="字号"
             type="button"
             class="menubar__button menubar__title"
-            style="position:relative;"
+            style="position:relative; width:44px;"
             :class="{
               'is-active': isFontSizeActive(getMarkAttrs),
             }"
             @click="fontSizePickerVisible = !fontSizePickerVisible"
           >
             <span ref="fontButton" class="menubar__button--font">
-              {{
-                activeFontSize(getMarkAttrs, isActive) || currentFontSize
-              }}px<i class="el-icon-caret-bottom"></i>
+              {{ activeFontSize(getMarkAttrs, isActive) || currentFontSize }}px
             </span>
           </button>
           <ul v-if="fontSizePickerVisible" class="font-size-picker">
@@ -527,7 +532,7 @@ export default {
     },
     width: {
       required: false,
-      default: '800px',
+      default: '720px',
       type: String,
     },
     imageProvider: {
@@ -806,7 +811,7 @@ export default {
 
     selectColor(commands, color, validate) {
       if (validate) {
-        const pattern = /^#[0-9a-fA-F]{6}$/
+        const pattern = /^#[0-9a-fA-F]{6}$|^#[0-9a-fA-F]{3}$/
         if (!pattern.test(color)) {
           this.colorError = '无效的色值'
           return
@@ -863,20 +868,20 @@ $color-grey: #dddddd;
   border-bottom-style: solid;
 }
 .px-2 {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 .py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 .py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 .py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .flex-wrap {
@@ -913,6 +918,11 @@ $color-grey: #dddddd;
 }
 
 .vue-editor {
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
   video {
     width: 300px;
   }
@@ -940,6 +950,22 @@ $color-grey: #dddddd;
       color: #fff;
     }
   }
+  .video-confirm-button {
+    background-color: #fff;
+    border: none;
+    color: #5ba0ff;
+    padding: 7px 8px;
+    font-size: 12px;
+    border-radius: 3px;
+    outline: none;
+    transition: 0.1s;
+    font-weight: 500;
+    &:hover,
+    &:focus {
+      color: #7cb3ff;
+    }
+  }
+
   .color-input {
     background-color: #fff;
     border-radius: 4px;
@@ -955,6 +981,7 @@ $color-grey: #dddddd;
   }
   .video-input {
     background-color: #fff;
+    flex: 1;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
     font-size: 14px;
@@ -980,11 +1007,11 @@ $color-grey: #dddddd;
     }
 
     pre {
-      padding: 0.7rem 1rem;
+      padding: 12px 16px;
       border-radius: 5px;
       background: $color-black;
       color: $color-white;
-      font-size: 0.8rem;
+      font-size: 8px;
       overflow-x: auto;
 
       code {
@@ -999,9 +1026,9 @@ $color-grey: #dddddd;
 
     p code {
       display: inline-block;
-      padding: 0 0.4rem;
+      padding: 0 6px;
       border-radius: 5px;
-      font-size: 0.8rem;
+      font-size: 8px;
       font-weight: bold;
       background: rgba($color-black, 0.1);
       color: rgba($color-black, 0.8);
@@ -1009,7 +1036,7 @@ $color-grey: #dddddd;
 
     ul,
     ol {
-      padding-left: 1rem;
+      padding-left: 32px;
     }
     hr {
       border-bottom-width: 1px;
@@ -1037,18 +1064,18 @@ $color-grey: #dddddd;
     }
     h1 {
       font-size: 32px;
-      margin-top: 0.67em;
-      margin-bottom: 0.67em;
+      margin-top: 11px;
+      margin-bottom: 11px;
     }
     h2 {
       font-size: 24px;
-      margin-top: 0.83em;
-      margin-bottom: 0.83em;
+      margin-top: 12px;
+      margin-bottom: 12px;
     }
     h3 {
       font-size: 18px;
-      margin-top: 1em;
-      margin-bottom: 1em;
+      margin-top: 16px;
+      margin-bottom: 16px;
     }
 
     a {
@@ -1058,7 +1085,7 @@ $color-grey: #dddddd;
     blockquote {
       border-left: 3px solid rgba($color-black, 0.1);
       color: rgba($color-black, 0.8);
-      padding-left: 0.8rem;
+      padding-left: 8px;
       font-style: italic;
 
       p {
@@ -1080,7 +1107,7 @@ $color-grey: #dddddd;
 
       td,
       th {
-        min-width: 1em;
+        min-width: 16px;
         border: 2px solid $color-grey;
         padding: 3px 5px;
         vertical-align: top;
@@ -1121,7 +1148,7 @@ $color-grey: #dddddd;
     }
 
     .tableWrapper {
-      margin: 1em 0;
+      margin: 16px 0;
       overflow-x: auto;
     }
 
@@ -1132,7 +1159,7 @@ $color-grey: #dddddd;
   }
 }
 .menubar {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
   background: #ffffff;
   border-bottom: 1px solid hsl(210, 26%, 84%);
 
@@ -1146,6 +1173,8 @@ $color-grey: #dddddd;
     opacity: 1;
     transition: visibility 0.2s, opacity 0.2s;
   }
+  .button-container {
+  }
 
   &__button {
     font-weight: bold;
@@ -1153,8 +1182,7 @@ $color-grey: #dddddd;
     background: transparent;
     border: 0;
     color: #8590a6;
-    padding: 0.2rem 0.3rem;
-    margin-right: 0.2rem;
+    padding: 3.2px 4.8px;
     border-radius: 3px;
     cursor: pointer;
 
@@ -1220,7 +1248,7 @@ $color-grey: #dddddd;
   .video-picker {
     z-index: 100;
     position: absolute;
-    width: 300px;
+    width: 320px;
     background: #ffffff;
     border: 1px solid #cccccc;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
@@ -1245,7 +1273,7 @@ $color-grey: #dddddd;
     background: transparent;
     border: 0;
     color: #8590a6;
-    padding: 0.5rem 0.5rem;
+    padding: 8px;
     border-radius: 3px;
     cursor: pointer;
   }
