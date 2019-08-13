@@ -532,7 +532,7 @@ export default {
     },
     width: {
       required: false,
-      default: '720px',
+      default: '810px',
       type: String,
     },
     imageProvider: {
@@ -718,6 +718,7 @@ export default {
     document.addEventListener('click', this.closePicker)
     this.closeOnEsc = e => {
       if (e.key == 'Escape' || e.key == 'Esc') {
+        // eslint-disable-next-line
         pickers.forEach(([_, visible]) => {
           this[visible] = false
         })
@@ -1243,7 +1244,7 @@ $color-grey: #dddddd;
     top: 100%;
     left: 0;
     padding: 2px 2px;
-    transform: translateX(-50%);
+    transform: translateX(-20%);
   }
   .video-picker {
     z-index: 100;
