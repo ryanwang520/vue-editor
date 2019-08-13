@@ -45,7 +45,7 @@
             :class="{
               'is-active': isActive.color() || isActive.fill(),
             }"
-            @click="colorPickerVisible = !colorPickerVisible"
+            @click="showColorPicker"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -102,6 +102,7 @@
                 >
                   <div class="flex flex-col">
                     <input
+                      ref="colorPickerInput"
                       class="color-input"
                       maxlength="7"
                       placeholder="#FFFFFF"
@@ -114,14 +115,6 @@
                   </button>
                 </form>
               </div>
-              <!-- <div class="flex items-center">
-                <span>其他颜色</span>
-                <el-color-picker
-                  v-model="userColor"
-                  class="mx-4"
-                  @change="selectColor(commands, userColor)"
-                ></el-color-picker>
-              </div> -->
             </div>
           </div>
         </div>
@@ -150,7 +143,7 @@
             v-tooltip.bottom="'视频链接'"
             aria-label="视频"
             type="button"
-            @click="videoPickerVisible = true"
+            @click="showVideoPicker"
             class="menubar__button"
           >
             <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24">
@@ -161,9 +154,10 @@
             </svg>
           </button>
           <div v-if="videoPickerVisible" class="flex items-center video-picker">
-            <form @submit.prevent="addVideo(commands)">
+            <form @submit.prevent="addVideo(commands.video)">
               <label for="vue-editor-video-input">视频地址：</label>
               <input
+                ref="videoInput"
                 class="video-input"
                 style="margin-right:12px;"
                 id="vue-editor-video-input"
@@ -735,8 +729,20 @@ export default {
   },
 
   methods: {
-    addVideo(commands) {
-      commands.video({ src: this.videoAddress })
+    showColorPicker() {
+      this.colorPickerVisible = true
+      this.$nextTick(() => {
+        this.$refs.colorPickerInput.focus()
+      })
+    },
+    showVideoPicker() {
+      this.videoPickerVisible = true
+      this.$nextTick(() => {
+        this.$refs.videoInput.focus()
+      })
+    },
+    addVideo(command) {
+      command({ src: this.videoAddress })
       this.videoAddress = ''
       this.videoPickerVisible = false
     },
@@ -954,6 +960,7 @@ $color-grey: #dddddd;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
     font-size: 14px;
+    padding: 3px 4px;
     color: #606266;
     outline: none;
     &:focus {
