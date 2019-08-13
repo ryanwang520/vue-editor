@@ -696,28 +696,26 @@ export default {
       },
     })
     window.editor = this.editor
+    const pickers = [
+      ['fontSiziePicker', 'fontSizePickerVisible'],
+      ['colorPicker', 'colorPickerVisible'],
+      ['videoPicker', 'videoPickerVisible'],
+    ]
 
     this.closePicker = event => {
-      var isClickInside = this.$refs.fontSiziePicker.contains(event.target)
-      if (!isClickInside) {
-        this.fontSizePickerVisible = false
-      }
-      isClickInside = this.$refs.colorPicker.contains(event.target)
-      if (!isClickInside) {
-        this.colorPickerVisible = false
-      }
-      isClickInside = this.$refs.videoPicker.contains(event.target)
-      if (!isClickInside) {
-        this.videoPickerVisible = false
-      }
+      pickers.forEach(([ref, visible]) => {
+        if (!this.$refs[ref].contains(event.target)) {
+          this[visible] = false
+        }
+      })
     }
 
     document.addEventListener('click', this.closePicker)
     this.closeOnEsc = e => {
       if (e.key == 'Escape' || e.key == 'Esc') {
-        this.fontSizePickerVisible = false
-        this.colorPickerVisible = false
-        this.videoPickerVisible = false
+        pickers.forEach(([_, visible]) => {
+          this[visible] = false
+        })
       }
     }
     document.addEventListener('keyup', this.closeOnEsc)
