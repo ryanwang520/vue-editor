@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Editor v-model="data" :image-provider="imageProvider" />
+    <Editor v-model="data" :image-provider="imageProvider" :width="width" />
     <pre>{{ data }}</pre>
   </div>
 </template>
@@ -23,6 +23,12 @@ export default {
     }
   },
   name: 'app',
+  props: {
+    width: {
+      type: String,
+      required: false,
+    },
+  },
   components: {
     Editor,
   },
