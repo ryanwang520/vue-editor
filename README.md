@@ -23,7 +23,7 @@ yarn add @baoshishu/vue-editor
 
 <script>
 // Import the editor
-import Editor from '@/baoshishu/vue-editor'
+import Editor from '@baoshishu/vue-editor'
 
 export default {
   components: {
