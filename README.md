@@ -14,6 +14,10 @@ or
 yarn add @baoshishu/vue-editor
 ```
 
+## Demo
+
+See the live [demo]()
+
 ## Basic Setup
 
 ```vue

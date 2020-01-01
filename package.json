@@ -4,13 +4,14 @@
   "main": "dist/vue-editor.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
+    "build:demo": "vue-cli-service build",
     "start": "yarn serve",
     "build:umd": "rollup --config build/rollup.config.umd.js",
     "build": "yarn build:umd",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "tiptap": "1.24.0",
+    "tiptap": "1.26.6",
     "tiptap-extensions": "^1.28.6",
     "v-tooltip": "^2.0.2"
   },
