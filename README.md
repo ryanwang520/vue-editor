@@ -16,7 +16,7 @@ yarn add @baoshishu/vue-editor
 
 ## Demo
 
-See the live [demo](https://gifted-liskov-8e35ae.netlify.com)
+See the live [demo](https://vue-editor.netlify.com)
 
 ## Basic Setup
 
