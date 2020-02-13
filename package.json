@@ -1,6 +1,6 @@
 {
   "name": "@baoshishu/vue-editor",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "main": "dist/vue-editor.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -40,5 +40,8 @@
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.39.1"
+  },
+  "resolutions": {
+    "prosemirror-model": "1.8.2"
   }
 }
