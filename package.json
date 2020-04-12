@@ -1,9 +1,9 @@
 {
   "name": "@baoshishu/vue-editor",
   "version": "0.2.0",
-  "main": "dist/vue-apollo.umd.js",
-  "unpkg": "dist/vue-apollo.min.js",
-  "module": "dist/vue-apollo.esm.js",
+  "main": "dist/vue-editor.umd.js",
+  "unpkg": "dist/vue-editor.min.js",
+  "module": "dist/vue-editor.esm.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build:demo": "vue-cli-service build",
