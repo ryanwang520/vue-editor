@@ -6,8 +6,8 @@
 </template>
 
 <script>
-// import Editor from '@/index.js'
-import Editor from '../dist/vue-editor.min'
+import Editor from '@/index.js'
+// import Editor from '../dist/vue-editor.min'
 
 export default {
   data() {
