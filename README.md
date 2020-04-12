@@ -50,7 +50,7 @@ export default {
 
 `imageProvider` could also be a function returning a Promise, thus `imageProvider` would be lazily resolved when user upload image first time.
 
-```
+```javascript
 function resolveProvider() {
   return new Promise(resolve=> {
     setTimeout(()=>{
