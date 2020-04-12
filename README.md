@@ -35,6 +35,7 @@ export default {
   },
   data() {
     return {
+      data: '',
       imageProvider: {
         name: 'qiniu',
         token:
