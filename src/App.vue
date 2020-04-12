@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Editor from '@/index.js'
-/*import Editor from '../dist/vue-editor.umd'*/
+// import Editor from '@/index.js'
+import Editor from '../dist/vue-editor.min'
 
 export default {
   data() {
@@ -17,7 +17,7 @@ export default {
       imageProvider: {
         name: 'qiniu',
         token:
-          '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:0PSey7kMtMFbU84mrM4WYeVzfgA=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTU2NTY4OTM3MH0=',
+          '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:9YAz4dCiB3EAdYuoDVO0YvObtqY=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTkwMjAyODY1NX0=',
         domain: 'cdn-testing.zanquan.net',
       },
     }

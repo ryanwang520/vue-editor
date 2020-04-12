@@ -22,10 +22,10 @@ export default {
     }),
     vue({
       css: true,
-      compileTemplate: true, // Explicitly convert template to render function
     }),
     babel({
       exclude: 'node_modules/**',
+      extensions: ['.js', '.jsx', '.es6', '.es', '.mjs', '.vue'],
     }),
     cjs({
       exclude: 'src/**',

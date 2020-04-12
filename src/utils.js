@@ -1,7 +1,7 @@
 import { findParentNode, findSelectedNodeOfType } from 'prosemirror-utils'
 
 export function nodeIsActive(state, type, attrs = {}) {
-  const predicate = node => node.type === type
+  const predicate = (node) => node.type === type
   const node =
     findSelectedNodeOfType(type)(state.selection) ||
     findParentNode(predicate)(state.selection)
@@ -12,7 +12,7 @@ export function nodeIsActive(state, type, attrs = {}) {
 
   function nodeHasAttrs(node, attrs) {
     return Object.keys(attrs).every(
-      attrName => attrs[attrName] == node.attrs[attrName]
+      (attrName) => attrs[attrName] == node.attrs[attrName]
     )
   }
 

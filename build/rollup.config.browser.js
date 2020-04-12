@@ -1,5 +1,7 @@
 import base from './rollup.config.base'
 
+import { terser } from 'rollup-plugin-terser'
+
 const config = Object.assign({}, base, {
   output: {
     globals: {
@@ -9,11 +11,11 @@ const config = Object.assign({}, base, {
       'tiptap-commands': 'tiptapCommands',
       tiptap: 'tiptap',
     },
-
     name: 'VueEditor',
-    file: 'dist/vue-editor.umd.js',
-    format: 'umd',
+    file: 'dist/vue-editor.min.js',
+    format: 'iife',
   },
 })
+config.plugins.push(terser())
 
 export default config

@@ -1,46 +1,55 @@
 {
   "name": "@baoshishu/vue-editor",
-  "version": "0.1.31",
-  "main": "dist/vue-editor.umd.js",
+  "version": "0.2.0",
+  "main": "dist/vue-apollo.umd.js",
+  "unpkg": "dist/vue-apollo.min.js",
+  "module": "dist/vue-apollo.esm.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build:demo": "vue-cli-service build",
     "start": "yarn serve",
+    "build:es": "rollup --config build/rollup.config.es.js",
     "build:umd": "rollup --config build/rollup.config.umd.js",
-    "build": "yarn build:umd",
+    "build:browser": "rollup --config build/rollup.config.browser.js",
+    "prepublishOnly": "yarn build",
+    "build": "yarn build:es && yarn build:umd && yarn build:browser",
     "lint": "vue-cli-service lint"
   },
-  "dependencies": {
-    "tiptap-extensions": "1.28.6",
-    "v-tooltip": "^2.0.2",
-    "tiptap": "^1.26.6"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.8.0",
-    "@vue/cli-plugin-babel": "^3.10.0",
-    "@vue/cli-plugin-eslint": "^4.1.2",
-    "@vue/cli-service": "^4.1.2",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.0.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-vue": "^6.1.2",
-    "node-sass": "^4.13.0",
-    "postcss": "^7.0",
-    "prettier": "^1.19.1",
-    "rollup": "^1.29.0",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-postcss": "^2.0.3",
-    "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-vue": "^5.1.5",
-    "sass-loader": "^8.0.2",
-    "vue": "^2.6.11",
-    "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.39.1"
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
-    "prosemirror-model": "1.8.2"
+    "tiptap": "^1.27.0",
+    "tiptap-extensions": "1.29.0",
+    "v-tooltip": "^2.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@vue/cli-plugin-babel": "^4.3.1",
+    "@vue/cli-plugin-eslint": "^4.3.1",
+    "@vue/cli-service": "^4.3.1",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.13.1",
+    "postcss": "^7.0.27",
+    "prettier": "^1.19.1",
+    "rollup": "^2.6.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-postcss": "^2.5.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-terser": "^5.3.0",
+    "rollup-plugin-vue": "^5.1.6",
+    "sass-loader": "^8.0.2",
+    "tiptap": "^1.27.0",
+    "tiptap-extensions": "1.29.0",
+    "v-tooltip": "^2.0.3",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.42.1"
   }
 }
