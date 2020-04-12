@@ -16,8 +16,17 @@ export default class Image extends Node {
   get name() {
     return 'image'
   }
-  upload(file) {
-    const { token, domain } = this.options.provider
+  constructor(options) {
+    super(options)
+    if (typeof options.provider != 'function') {
+      this.provider = options.provider
+    } else {
+      this.provider = null
+    }
+  }
+  _upload(file) {
+    const { token, domain } = this.provider
+    console.log(this.provider)
     return new Promise((resolve, reject) => {
       const data = new FormData()
       data.append('file', file)
@@ -35,6 +44,26 @@ export default class Image extends Node {
         }
       }
     })
+  }
+
+  upload(file) {
+    if (this.provider) {
+      return this._upload(file)
+    }
+    let { provider } = this.options
+
+    if (typeof provider == 'function') {
+      const result = provider()
+      if (result.then) {
+        return result.then(res => {
+          this.provider = res
+          return this._upload(file)
+        })
+      } else {
+        this.provider = result
+      }
+    }
+    return this._upload(file)
   }
 
   uploadImage(file, view, pos) {

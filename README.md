@@ -37,13 +37,34 @@ export default {
     return {
       data: '',
       imageProvider: {
-        name: 'qiniu',
+        name: 'qiniu', // provider name
         token:
-          '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:9YAz4dCiB3EAdYuoDVO0YvObtqY=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTkwMjAyODY1NX0=',
-        domain: 'cdn-testing.zanquan.net',
+          '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:9YAz4dCiB3EAdYuoDVO0YvObtqY=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTkwMjAyODY1NX0=', // upload token
+        domain: 'cdn-testing.zanquan.net', // upload domain
       },
     }
   },
 }
 </script>
+```
+
+`imageProvider` could also be a function returning a Promise, thus `imageProvider` would be lazily resolved when user upload image first time.
+
+```
+function resolveProvider() {
+  return new Promise(resolve=> {
+    setTimeout(()=>{
+      resolve({
+        name,
+        token,
+        domain,
+      })
+    }, 1000)
+
+  })
+}
+
+{
+  imageProvider: resolveProvider
+}
 ```

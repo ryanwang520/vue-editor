@@ -537,7 +537,7 @@ export default {
     },
     imageProvider: {
       required: true,
-      type: Object,
+      type: [Object, Function],
     },
   },
   data() {
