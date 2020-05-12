@@ -729,7 +729,10 @@ export default {
   beforeDestroy() {
     document.removeEventListener('click', this.closePicker)
     document.removeEventListener('keyup', this.closeOnEsc)
-    this.editor.destroy()
+
+    if (this.editor) {
+      this.editor.destroy()
+    }
   },
 
   methods: {
