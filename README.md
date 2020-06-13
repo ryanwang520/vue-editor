@@ -68,7 +68,7 @@ function resolveProvider() {
 }
 ```
 
-## AliyunProvider
+## AliOSSProvider
 
 ```javascript
 import Editor from '@baoshishu/vue-editor'

@@ -12,6 +12,82 @@ import { nodeInputRule } from 'tiptap-commands'
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']
 
+function getEtag(buffer, callback) {
+  // 判断传入的参数是buffer还是stream还是filepath
+  var mode = 'buffer'
+
+  if (typeof buffer === 'string') {
+    buffer = require('fs').createReadStream(buffer)
+    mode = 'stream'
+  } else if (buffer instanceof require('stream')) {
+    mode = 'stream'
+  }
+
+  // sha1算法
+  var sha1 = function(content) {
+    var crypto = require('crypto')
+    var sha1 = crypto.createHash('sha1')
+    sha1.update(content)
+    return sha1.digest()
+  }
+
+  // 以4M为单位分割
+  var blockSize = 4 * 1024 * 1024
+  var sha1String = []
+  var prefix = 0x16
+  var blockCount = 0
+
+  switch (mode) {
+    case 'buffer':
+      var bufferSize = buffer.length
+      blockCount = Math.ceil(bufferSize / blockSize)
+
+      for (var i = 0; i < blockCount; i++) {
+        sha1String.push(sha1(buffer.slice(i * blockSize, (i + 1) * blockSize)))
+      }
+      process.nextTick(function() {
+        callback(calcEtag())
+      })
+      break
+    case 'stream':
+      var stream = buffer
+      stream.on('readable', function() {
+        var chunk
+        while ((chunk = stream.read(blockSize))) {
+          sha1String.push(sha1(chunk))
+          blockCount++
+        }
+      })
+      stream.on('end', function() {
+        callback(calcEtag())
+      })
+      break
+  }
+
+  function calcEtag() {
+    if (!sha1String.length) {
+      return 'Fto5o-5ea0sNMlW_75VgGJCv2AcJ'
+    }
+    var sha1Buffer = Buffer.concat(sha1String, blockCount * 20)
+
+    // 如果大于4M，则对各个块的sha1结果再次sha1
+    if (blockCount > 1) {
+      prefix = 0x96
+      sha1Buffer = sha1(sha1Buffer)
+    }
+
+    sha1Buffer = Buffer.concat(
+      [new Buffer([prefix]), sha1Buffer],
+      sha1Buffer.length + 1
+    )
+
+    return sha1Buffer
+      .toString('base64')
+      .replace(/\//g, '_')
+      .replace(/\+/g, '-')
+  }
+}
+
 class ImageHandler {
   constructor(provider) {
     this.provider = provider
@@ -40,10 +116,10 @@ class AliHandler extends ImageHandler {
     super(provider)
     this.uploadUrl = provider.host
   }
-  makeForm(file) {
+  makeForm(file, key) {
     const data = new FormData()
     data.append('name', file.name)
-    data.append('key', file.name)
+    data.append('key', key)
     data.append('policy', this.provider.policy)
     data.append('OSSAccessKeyId', this.provider.accessKeyId)
     data.append('signature', this.provider.signature)
@@ -81,20 +157,20 @@ export default class Image extends Node {
   _upload(file) {
     const uploadHandler = getHandler(this.provider)
 
-    console.log(this.provider)
     return new Promise((resolve, reject) => {
-      const data = uploadHandler.makeForm(file)
-
-      const xhr = new XMLHttpRequest()
-      xhr.open('POST', uploadHandler.uploadUrl)
-      xhr.send(data)
-      xhr.onload = () => {
-        if (xhr.status === 200 || xhr.status == 204) {
-          resolve(uploadHandler.urlFromResponse(xhr, data))
-        } else {
-          reject()
+      getEtag(file, key => {
+        const xhr = new XMLHttpRequest()
+        const data = uploadHandler.makeForm(file, key)
+        xhr.open('POST', uploadHandler.uploadUrl)
+        xhr.send(data)
+        xhr.onload = () => {
+          if (xhr.status === 200 || xhr.status == 204) {
+            resolve(uploadHandler.urlFromResponse(xhr, data))
+          } else {
+            reject()
+          }
         }
-      }
+      })
     })
   }
 
