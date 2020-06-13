@@ -12,6 +12,60 @@ import { nodeInputRule } from 'tiptap-commands'
 const IMAGE_INPUT_REGEX = /!\[(.+|:?)\]\((\S+)(?:(?:\s+)["'](\S+)["'])?\)/
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']
 
+class ImageHandler {
+  constructor(provider) {
+    this.provider = provider
+  }
+}
+
+class Qiniuhandler extends ImageHandler {
+  constructor(provider) {
+    super(provider)
+    this.uploadUrl = 'https://upload.qiniup.com'
+  }
+  makeForm(file) {
+    const data = new FormData()
+    data.append('file', file)
+    data.append('token', this.provider.token)
+    return data
+  }
+  urlFromResponse(xhr) {
+    const { key } = JSON.parse(xhr.responseText)
+    return `https://${this.provider.domain}/${key}`
+  }
+}
+
+class AliHandler extends ImageHandler {
+  constructor(provider) {
+    super(provider)
+    this.uploadUrl = provider.host
+  }
+  makeForm(file) {
+    const data = new FormData()
+    data.append('name', file.name)
+    data.append('key', file.name)
+    data.append('policy', this.provider.policy)
+    data.append('OSSAccessKeyId', this.provider.accessKeyId)
+    data.append('signature', this.provider.signature)
+    data.append('file', file)
+
+    return data
+  }
+  urlFromResponse(_, formData) {
+    return `${this.provider.host}/${formData.get('key')}`
+  }
+}
+
+function getHandler(provider) {
+  if (provider.name == 'aliyun') {
+    return new AliHandler(provider)
+  }
+  if (provider.name == 'qiniu') {
+    return new Qiniuhandler(provider)
+  }
+  throw `Un supported provider ${provider.name}`
+}
+
 export default class Image extends Node {
   get name() {
     return 'image'
@@ -25,20 +79,18 @@ export default class Image extends Node {
     }
   }
   _upload(file) {
-    const { token, domain } = this.provider
+    const uploadHandler = getHandler(this.provider)
+
     console.log(this.provider)
     return new Promise((resolve, reject) => {
-      const data = new FormData()
-      data.append('file', file)
-      data.append('token', token)
+      const data = uploadHandler.makeForm(file)
 
       const xhr = new XMLHttpRequest()
-      xhr.open('POST', 'https://upload.qiniup.com')
+      xhr.open('POST', uploadHandler.uploadUrl)
       xhr.send(data)
       xhr.onload = () => {
-        if (xhr.status === 200) {
-          const { key } = JSON.parse(xhr.responseText)
-          resolve(`https://${domain}/${key}`)
+        if (xhr.status === 200 || xhr.status == 204) {
+          resolve(uploadHandler.urlFromResponse(xhr, data))
         } else {
           reject()
         }
@@ -68,7 +120,7 @@ export default class Image extends Node {
 
   uploadImage(file, view, pos) {
     const { schema } = view.state
-    this.upload(file, this.options.provider.token).then(src => {
+    this.upload(file).then(src => {
       const node = schema.nodes.image.create({
         src,
       })

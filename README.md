@@ -52,19 +52,43 @@ export default {
 
 ```javascript
 function resolveProvider() {
-  return new Promise(resolve=> {
-    setTimeout(()=>{
+  return new Promise(resolve => {
+    setTimeout(() => {
       resolve({
         name,
         token,
         domain,
       })
     }, 1000)
-
   })
 }
 
 {
   imageProvider: resolveProvider
+}
+```
+
+## AliyunProvider
+
+```javascript
+import Editor from '@baoshishu/vue-editor'
+
+export default {
+  components: {
+    Editor,
+  },
+  data() {
+    return {
+      data: '',
+      imageProvider: {
+        name: 'aliyun',
+        signature: 'DQdDwZMymx9SKS1HHNFxFbFauVc=',
+        policy:
+          'eyJleHBpcmF0aW9uIjogIjIwMjAtMDYtMTNUMDU6MTQ6MzVaIiwgImNvbmRpdGlvbnMiOiBbWyJlcSIsICIkYnVja2V0IiwgInlvdWp1YW4tc3RhZ2luZyJdXX0=',
+        host: 'https://your-bucket.oss-cn-hangzhou.aliyuncs.com',
+        accessKeyId: 'LTAI4G3mTGD1eKGFqCJnrvNL',
+      },
+    }
+  },
 }
 ```

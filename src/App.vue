@@ -15,10 +15,12 @@ export default {
       data:
         '<p><video controls><source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"></video></p>',
       imageProvider: {
-        name: 'qiniu',
-        token:
-          '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:9YAz4dCiB3EAdYuoDVO0YvObtqY=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTkwMjAyODY1NX0=',
-        domain: 'cdn-testing.zanquan.net',
+        name: 'aliyun',
+        signature: 'DQdDwZMymx9SKS1HHNFxFbFauVc=',
+        policy:
+          'eyJleHBpcmF0aW9uIjogIjIwMjAtMDYtMTNUMDU6MTQ6MzVaIiwgImNvbmRpdGlvbnMiOiBbWyJlcSIsICIkYnVja2V0IiwgInlvdWp1YW4tc3RhZ2luZyJdXX0=',
+        host: 'https://youjuan-staging.oss-cn-hangzhou.aliyuncs.com',
+        accessKeyId: 'LTAI4G3mTGD1eKGFqCJnrvNL',
       },
     }
   },
