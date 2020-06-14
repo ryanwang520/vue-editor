@@ -16,11 +16,11 @@ export default {
         '<p><video controls><source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"></video></p>',
       imageProvider: {
         name: 'aliyun',
-        signature: 'DQdDwZMymx9SKS1HHNFxFbFauVc=',
+        signature: 'G/xnzpwourfgMiFBPEJNbbuOG7g=',
         policy:
-          'eyJleHBpcmF0aW9uIjogIjIwMjAtMDYtMTNUMDU6MTQ6MzVaIiwgImNvbmRpdGlvbnMiOiBbWyJlcSIsICIkYnVja2V0IiwgInlvdWp1YW4tc3RhZ2luZyJdXX0=',
-        host: 'https://youjuan-staging.oss-cn-hangzhou.aliyuncs.com',
-        accessKeyId: 'LTAI4G3mTGD1eKGFqCJnrvNL',
+          'eyJleHBpcmF0aW9uIjogIjIwMjAtMDYtMTRUMDY6MDk6MjVaIiwgImNvbmRpdGlvbnMiOiBbWyJlcSIsICIkYnVja2V0IiwgInlvdWp1YW4tc3RhZ2luZyJdXX0=',
+        domain: 'youjuan-staging.oss-cn-hangzhou.aliyuncs.com',
+        OSSAccessKeyId: 'LTAI4G3mTGD1eKGFqCJnrvNL',
       },
     }
   },

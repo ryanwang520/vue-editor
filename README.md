@@ -85,8 +85,8 @@ export default {
         signature: 'DQdDwZMymx9SKS1HHNFxFbFauVc=',
         policy:
           'eyJleHBpcmF0aW9uIjogIjIwMjAtMDYtMTNUMDU6MTQ6MzVaIiwgImNvbmRpdGlvbnMiOiBbWyJlcSIsICIkYnVja2V0IiwgInlvdWp1YW4tc3RhZ2luZyJdXX0=',
-        host: 'https://your-bucket.oss-cn-hangzhou.aliyuncs.com',
-        accessKeyId: 'LTAI4G3mTGD1eKGFqCJnrvNL',
+        domain: 'your-bucket.oss-cn-hangzhou.aliyuncs.com',
+        OSSAccessKeyId: 'LTAI4G3mTGD1eKGFqCJnrvNL',
       },
     }
   },

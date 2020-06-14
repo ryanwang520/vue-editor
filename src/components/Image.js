@@ -114,21 +114,21 @@ class Qiniuhandler extends ImageHandler {
 class AliHandler extends ImageHandler {
   constructor(provider) {
     super(provider)
-    this.uploadUrl = provider.host
+    this.uploadUrl = 'https://' + provider.domain
   }
   makeForm(file, key) {
     const data = new FormData()
     data.append('name', file.name)
     data.append('key', key)
     data.append('policy', this.provider.policy)
-    data.append('OSSAccessKeyId', this.provider.accessKeyId)
+    data.append('OSSAccessKeyId', this.provider.OSSAccessKeyId)
     data.append('signature', this.provider.signature)
     data.append('file', file)
 
     return data
   }
   urlFromResponse(_, formData) {
-    return `${this.provider.host}/${formData.get('key')}`
+    return `${this.uploadUrl}/${formData.get('key')}`
   }
 }
 
