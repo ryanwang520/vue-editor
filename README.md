@@ -5,13 +5,13 @@ A full-fledged rich-text editor for Vue.js
 ## Installation
 
 ```
-npm install @baoshishu/vue-editor tiptap tiptap-extensions v-tooltip
+npm install @baoshishu/vue-editor tiptap tiptap-extensions v-tooltip prosemirror-utils
 ```
 
 or
 
 ```
-yarn add @baoshishu/vue-editor tiptap tiptap-extensions v-tooltip
+yarn add @baoshishu/vue-editor tiptap tiptap-extensions v-tooltip prosemirror-utils
 ```
 
 ## Demo
