@@ -86,7 +86,7 @@ export default {
         policy:
           'eyJleHBpcmF0aW9uIjogIjIwMjAtMDYtMTNUMDU6MTQ6MzVaIiwgImNvbmRpdGlvbnMiOiBbWyJlcSIsICIkYnVja2V0IiwgInlvdWp1YW4tc3RhZ2luZyJdXX0=',
         domain: 'your-bucket.oss-cn-hangzhou.aliyuncs.com',
-        OSSAccessKeyId: 'LTAI4G3mTGD1eKGFqCJnrvNL',
+        OSSAccessKeyId: 'LTAI4G3mD1eKGFqCJnrvNL',
       },
     }
   },

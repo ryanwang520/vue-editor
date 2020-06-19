@@ -20,7 +20,7 @@ export default {
         policy:
           'eyJleHBpcmF0aW9uIjogIjIwMjAtMDYtMThUMDc6MjY6NDJaIiwgImNvbmRpdGlvbnMiOiBbWyJlcSIsICIkYnVja2V0IiwgInlvdWp1YW4tc3RhZ2luZyJdXX0=',
         domain: 'youjuan-staging.oss-cn-hangzhou.aliyuncs.com',
-        OSSAccessKeyId: 'LTAI4G3mTGD1eKGFqCJnrvNL',
+        OSSAccessKeyId: 'LTAI4G3mTGD1eKGFqCJnNL',
       },
     }
   },
