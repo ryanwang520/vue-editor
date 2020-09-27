@@ -49,9 +49,7 @@ class Qiniuhandler extends ImageHandler {
     let url = `https://${this.provider.domain}/${key}`
     if (this.provider.modifier) {
       var img = new window.Image()
-      // // 改变图片的src
       img.src = url
-
       const loadImage = new Promise(resolve => {
         img.onload = function() {
           resolve()
