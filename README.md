@@ -41,6 +41,13 @@ export default {
         token:
           '-qWchT63mkZEJch0ygm3bN9h3peInHqCcSAEMtvV:9YAz4dCiB3EAdYuoDVO0YvObtqY=:eyJzY29wZSI6InRlc3QiLCJkZWFkbGluZSI6MTkwMjAyODY1NX0=', // upload token
         domain: 'cdn-testing.zanquan.net', // upload domain
+        modifier: ({ width, height, url }) => {
+          if (width < 750) {
+            return url
+          } else {
+            return `${url}?imageMogr2/thumbnail/750x/`
+          }
+        },
       },
     }
   },

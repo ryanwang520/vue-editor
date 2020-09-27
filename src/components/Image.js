@@ -46,7 +46,25 @@ class Qiniuhandler extends ImageHandler {
   }
   urlFromResponse(xhr) {
     const { key } = JSON.parse(xhr.responseText)
-    return `https://${this.provider.domain}/${key}`
+    let url = `https://${this.provider.domain}/${key}`
+    if (this.provider.modifier) {
+      var img = new window.Image()
+      img.src = url
+      const loadImage = new Promise(resolve => {
+        img.onload = function() {
+          resolve()
+        }
+      })
+      return loadImage.then(() => {
+        console.log({ width: img.width })
+        return this.provider.modifier({
+          url,
+          width: img.width,
+          height: img.height,
+        })
+      })
+    }
+    return url
   }
 }
 
