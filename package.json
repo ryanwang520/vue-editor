@@ -49,8 +49,8 @@
     "tiptap-extensions": "1.33.2",
     "v-tooltip": "^2.0.3",
     "vue": "^2.6.11",
-    "node-forge": "0.10.0",
     "vue-template-compiler": "^2.6.11",
+    "selfsigned": "^1.10.8",
     "webpack": "^4.42.1"
   }
 }
