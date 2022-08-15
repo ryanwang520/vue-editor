@@ -34,7 +34,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^5.0.0",
-    "postcss": "^8.2.10",
+    "postcss": "^8.2.13",
     "prettier": "^1.19.1",
     "prosemirror-utils": "^0.9.6",
     "rollup": "^2.6.0",
