@@ -5,13 +5,13 @@ A full-fledged rich-text editor for Vue.js
 ## Installation
 
 ```
-npm install @baoshishu/vue-editor tiptap tiptap-extensions v-tooltip prosemirror-utils
+npm install @ryanwang520/vue-editor tiptap tiptap-extensions v-tooltip prosemirror-utils
 ```
 
 or
 
 ```
-yarn add @baoshishu/vue-editor tiptap tiptap-extensions v-tooltip prosemirror-utils
+yarn add @ryanwang520/vue-editor tiptap tiptap-extensions v-tooltip prosemirror-utils
 ```
 
 ## Demo
@@ -27,7 +27,7 @@ See the live [demo](https://vue-editor.netlify.com)
 
 <script>
 // Import the editor
-import Editor from '@baoshishu/vue-editor'
+import Editor from '@ryanwang520/vue-editor'
 
 export default {
   components: {
@@ -78,7 +78,7 @@ function resolveProvider() {
 ## AliOSSProvider
 
 ```javascript
-import Editor from '@baoshishu/vue-editor'
+import Editor from '@ryanwang520/vue-editor'
 
 export default {
   components: {

@@ -1,5 +1,5 @@
 {
-  "name": "@baoshishu/vue-editor",
+  "name": "@ryanwang520/vue-editor",
   "version": "0.3.0",
   "main": "dist/vue-editor.umd.js",
   "unpkg": "dist/vue-editor.min.js",
