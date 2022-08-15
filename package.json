@@ -1,6 +1,6 @@
 {
   "name": "@ryanwang520/vue-editor",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "main": "dist/vue-editor.umd.js",
   "unpkg": "dist/vue-editor.min.js",
   "module": "dist/vue-editor.esm.js",
