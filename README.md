@@ -1,5 +1,7 @@
 # vue-editor
 
+https://github.com/ryanwang520/vue-editor
+
 A full-fledged rich-text editor for Vue.js
 
 ## Installation
